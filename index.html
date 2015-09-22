@@ -1,22 +1,38 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
     <script src="jquery.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
     <script src="data_generator.js"></script>
   </head>
   <body>
+    <!-- Button to pull tweets. Need to move the existing script into a button -->
+    <!-- Add timestamp functionality to the tweets -->
+    <h2 class="center-align card-panel hoverable">Twittler</h2>
+    <div id="refresher">
+      <button class="btn waves-effect waves-light" type="button" name="action" onclick="fn();">Refresh
+      </button>
+    </div>
+    <div id="tweetList"></div>
     <script>
 
       $(document).ready(function(){
-        var $body = $('body');
-        $body.html('');
+        var $tweetList = $('#tweetList');
+        $tweetList.html('');
+        //what does .html('') do?
 
         var index = streams.home.length - 1;
         while(index >= 0){
           var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $tweet.appendTo($body);
+          var $tweet = $('<div class="tweet section"></div>');
+          var $tweetUser = $('<div class="tweetUser"></div>');
+          $tweetUser.text('@' + tweet.user+ ': ');
+          // Add materalize and set the class for the div
+          $tweet.text(tweet.message + " Uploaded at: " + tweet.created_at);
+          $tweet.prepend($tweetUser);
+          //Run a function when the user is clicked that filters out other users
+          $tweet.appendTo($tweetList);
           index -= 1;
         }
 
