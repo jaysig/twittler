@@ -9,35 +9,77 @@
   <body>
     <!-- Button to pull tweets. Need to move the existing script into a button -->
     <!-- Add timestamp functionality to the tweets -->
-    <h2 class="center-align card-panel hoverable">Twittler</h2>
-    <div id="refresher">
-      <button class="btn waves-effect waves-light" type="button" name="action" onclick="fn();">Refresh
-      </button>
+    <div class="card-panel hoverable">
+      <div class="row">
+          <div class="col s4 offset-s4">
+            <h3 class="center-align ">Twittler</h3>
+          </div>
+          <div class="col s4 right-align">
+            <button class="btn waves-effect waves-light" type="button" name="action" onclick="refresher();">Refresh
+            </button>
+          </div>
+      </div>
     </div>
-    <div id="tweetList"></div>
+
+    <div id="refresher">
+
+    </div>
+    <div class="container">
+      <div id="tweetList"></div>
+    </div>
     <script>
-
+    //Function to Refresh Tweets
+    var refresher = function(){
+      var $tweetList = $('#tweetList');
+      $tweetList.html('');
+      //what does .html('') do?
+      var index = streams.home.length - 1;
+      while(index >= 0){
+        var tweet = streams.home[index];
+        var $tweet = $('<div class="tweet section"></div>');
+        var $tweetUser = $('<div class="tweetUser"></div>');
+        $tweetUser.text('@' + tweet.user+ ': ');
+        // Add materalize and set the class for the div
+        $tweet.text(tweet.message + " Uploaded at: " + tweet.created_at);
+        $tweet.prepend($tweetUser);
+        //Run a function when the user is clicked that filters out other users
+        $tweet.appendTo($tweetList);
+        index -= 1;
+      }
+    };
       $(document).ready(function(){
-        var $tweetList = $('#tweetList');
-        $tweetList.html('');
-        //what does .html('') do?
 
-        var index = streams.home.length - 1;
-        while(index >= 0){
-          var tweet = streams.home[index];
-          var $tweet = $('<div class="tweet section"></div>');
-          var $tweetUser = $('<div class="tweetUser"></div>');
-          $tweetUser.text('@' + tweet.user+ ': ');
-          // Add materalize and set the class for the div
-          $tweet.text(tweet.message + " Uploaded at: " + tweet.created_at);
-          $tweet.prepend($tweetUser);
-          //Run a function when the user is clicked that filters out other users
-          $tweet.appendTo($tweetList);
-          index -= 1;
-        }
+        //Display the existing tweets
+        refresher();
 
+        // Display User Tweets
+        $('.tweetUser').click( function() {
+
+            var user = $(this).text();
+            var userA = user.slice(1,user.length-2);
+            console.log(userA);
+            userTweets(userA);
+
+        });
+        //Individual User Tweets
+        var userTweets = function(user) {
+            debugger
+            var $tweetList = $('#tweetList');
+            $tweetList.html('');
+            var index = streams.users[user].length - 1;
+            while (index >= 0) {
+                var tweet = streams.users[user][index];
+                var $tweet = $('<div class="tweet section"></div>');
+                var $tweetUser = $('<div class="tweetUser"></div>');
+                $tweetUser.text('@' + tweet.user+ ': ');
+                // Add materalize and set the class for the div
+                $tweet.text(tweet.message + " Uploaded at: " + tweet.created_at);
+                $tweet.prepend($tweetUser);
+                $tweet.appendTo($tweetList);
+                index -= 1;
+            }
+        };
       });
-
     </script>
   </body>
 </html>
