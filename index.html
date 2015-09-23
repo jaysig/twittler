@@ -46,6 +46,33 @@
         $tweet.appendTo($tweetList);
         index -= 1;
       }
+      // Display User Tweets
+      $('.tweetUser').click( function() {
+          debugger
+          var user = $(this).text();
+          var userA = user.slice(1,user.length-2);
+          console.log(userA);
+          userTweets(userA);
+
+      });
+      //Individual User Tweets
+      var userTweets = function(user) {
+          debugger
+          var $tweetList = $('#tweetList');
+          $tweetList.html('');
+          var index = streams.users[user].length - 1;
+          while (index >= 0) {
+              var tweet = streams.users[user][index];
+              var $tweet = $('<div class="tweet section card-panel hoverable"></div>');
+              var $tweetUser = $('<div class="tweetUser"></div>');
+              $tweetUser.text('@' + tweet.user+ ': ');
+              // Add materalize and set the class for the div
+              $tweet.text(tweet.message + " Uploaded at: " + tweet.created_at);
+              $tweet.prepend($tweetUser);
+              $tweet.appendTo($tweetList);
+              index -= 1;
+          }
+      };
     };
 
       $(document).ready(function(){
@@ -55,7 +82,7 @@
 
         // Display User Tweets
         $('.tweetUser').click( function() {
-
+            debugger
             var user = $(this).text();
             var userA = user.slice(1,user.length-2);
             console.log(userA);
