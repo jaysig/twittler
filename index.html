@@ -36,7 +36,7 @@
       var index = streams.home.length - 1;
       while(index >= 0){
         var tweet = streams.home[index];
-        var $tweet = $('<div class="tweet section"></div>');
+        var $tweet = $('<div class="tweet section card-panel hoverable"></div>');
         var $tweetUser = $('<div class="tweetUser"></div>');
         $tweetUser.text('@' + tweet.user+ ': ');
         // Add materalize and set the class for the div
@@ -47,6 +47,7 @@
         index -= 1;
       }
     };
+
       $(document).ready(function(){
 
         //Display the existing tweets
@@ -69,7 +70,7 @@
             var index = streams.users[user].length - 1;
             while (index >= 0) {
                 var tweet = streams.users[user][index];
-                var $tweet = $('<div class="tweet section"></div>');
+                var $tweet = $('<div class="tweet section card-panel hoverable"></div>');
                 var $tweetUser = $('<div class="tweetUser"></div>');
                 $tweetUser.text('@' + tweet.user+ ': ');
                 // Add materalize and set the class for the div
